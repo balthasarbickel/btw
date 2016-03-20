@@ -1,5 +1,5 @@
 
-Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, silent=TRUE) {
+Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, silent=TRUE, rm=T) {
 
 # CHECK FOR PROBLEMS IN THE DATA
 tree$node.label = NULL
@@ -40,26 +40,45 @@ if (mode == 2) {
 	if (!is.null(rjhp)) {input = c(input, paste("rjhp", rjhp))}
 }
 input = c(input, paste("lf ./BTout.log.txt"))	
-input = c(input, "run")	
+input = c(input, 'Schedule')
+input = c(input, "run")
 write(input, file="./inputfile.txt") 
-ape::write.nexus(tree, file="./tree.nex", translate=T)	
-write.table(data, file="./data.txt", quote=F, col.names=F, row.names=F)
+ape::write.nexus(tree, file="./BT.current.tree.nex", translate=T)	
+write.table(data, file="./BT.current.data.txt", quote=F, col.names=F, row.names=F)
 	
 # RUN ANALYSIS
-system(paste(.BayesTraitsPath, "./tree.nex", "./data.txt", "< ./inputfile.txt"), ignore.stdout = silent)
+system(paste(.BayesTraitsPath, "./BT.current.tree.nex", "./BT.current.data.txt", "< ./inputfile.txt"), ignore.stdout = silent)
 
 # GET OUTPUT
+setwd('/Users/balthasar/Documents/Research/np/np-recursion-paper-checkout/')
 Skip = grep("Tree No", scan(file = "./BTout.log.txt", what="c", quiet=T, sep="\n", blank.lines.skip=FALSE)) - 1
 Results = read.table("./BTout.log.txt", skip = Skip, sep = "\t",  quote="\"", header = TRUE)
-Results = Results[,-ncol(Results)]	
+Results = Results[,-ncol(Results)]
+
+if (mode == 2) {
+Skip.Schedule <- grep("Accepted", scan(file ="./BTout.log.txt.Schedule.txt", what="c", quiet=T, sep="\n", blank.lines.skip=FALSE)) - 1
+Schedule = read.table("./BTout.log.txt.Schedule.txt",  skip=Skip.Schedule, sep = "\t",  quote="\"", header = TRUE)
+
+if (mean(Schedule$X..Accepted<.2)>.5 & mean(Schedule$X..Accepted>.4)>.5) {
+	prop.below <- 100*round(mean(Schedule$X..Accepted<.2),2)
+	prop.above <- 100*round(mean(Schedule$X..Accepted>.4),2)
+	warning(paste0("The acceptance rate was below .20 in ", prop.below, "% and above .40 in ",
+		 	prop.above, "% of the iterations!"), call. = F)
+}
+} 
 
 # DELETE FILES FROM DISK
+if(rm) {
 system(paste("rm ./BTout.log.txt"))
 system(paste("rm ./inputfile.txt"))
-system(paste("rm", "./tree.nex"))
-system(paste("rm", "./data.txt"))
-
+system(paste("rm", "./BT.current.tree.nex"))
+system(paste("rm", "./BT.current.data.txt"))
+if (mode == 2) {
+	system(paste("rm", "./BTout.log.txt.Schedule.txt"))
+	}
+}
 # RETURN RESULTS
+
 return(Results)
 }
 
