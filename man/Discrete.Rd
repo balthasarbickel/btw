@@ -4,7 +4,7 @@
 \usage{
 Discrete(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, 
 mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, 
-rjhp = NULL, silent=TRUE)
+rjhp = NULL, silent=TRUE, rm=TRUE)
 }
 \description{
 	Runs BayesTraits Multistate (for one discrete trait with two or more levels) and Discrete (for two discrete traits, each with two levels).
