@@ -50,7 +50,6 @@ write.table(data, file="./BT.current.data.txt", quote=F, col.names=F, row.names=
 system(paste(.BayesTraitsPath, "./BT.current.tree.nex", "./BT.current.data.txt", "< ./inputfile.txt"), ignore.stdout = silent)
 
 # GET OUTPUT
-setwd('/Users/balthasar/Documents/Research/np/np-recursion-paper-checkout/')
 Skip = grep("Tree No", scan(file = "./BTout.log.txt", what="c", quiet=T, sep="\n", blank.lines.skip=FALSE)) - 1
 Results = read.table("./BTout.log.txt", skip = Skip, sep = "\t",  quote="\"", header = TRUE)
 Results = Results[,-ncol(Results)]
