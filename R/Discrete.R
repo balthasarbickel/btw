@@ -1,5 +1,5 @@
 
-Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, silent=TRUE, rm=T) {
+Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, cv=FALSE, silent=TRUE, rm=T) {
 
 # CHECK FOR PROBLEMS IN THE DATA
 # tree$node.label <- NULL # throws an error when fed a multiPhylo object
@@ -38,6 +38,7 @@ if (mode == 2) {
 	if (!is.null(hp)) {for (i in 1:length(hp)) {input = c(input, paste("hp", hp[i]))}}
 	if (!is.null(hpall)) {input = c(input, paste("Hpall", hpall))}
 	if (!is.null(rjhp)) {input = c(input, paste("rjhp", rjhp))}
+	if (cv) {input = c(input, paste("cv"))}
 }
 input = c(input, paste("lf ./BTout.log.txt"))	
 input = c(input, 'Schedule')
