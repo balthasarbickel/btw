@@ -29,7 +29,8 @@ rjhp = NULL, silent=TRUE, rm=TRUE)
   \item{rj}{character string specifying the prior distribution for a reversible jump model. For example, rj = "exp 10" implements a reversible jump model with an exponential prior of mean 10.}
   \item{rjhp}{character string specifying the prior distribution for a reversible jump model, along with minimum and maximum values for a uniform hyper-prior. For example, rjhp = "exp 0 10" implements a reversible jump model with an exponential prior with the mean seeded by a uniform hyper-prior from 0 to 10.}
   \item{silent}{logical indicating whether to print BayesTraits output. Defaults to FALSE}
-  \item{rm}{logical indicating whether to clean up and remove all temporary files} 
+  \item{rm}{logical indicating whether to clean up and remove all temporary files. Defaults to TRUE} 
+  \item{reuse.tree}{logical indicating whether to re-use trees across runs. If FALSE, the script keeps a tree file on disk (named `BT.current.tree.nex`) regardless of whether rm is set to TRUE or FALSE and re-uses the tree file in the next run.}
 }
 \details{
 	Runs BayesTraits Multistate (for one discrete trait with two or more levels) and Discrete (for two discrete traits, each with two levels). See BayesTraits documentation for more information: http://www.evolution.rdg.ac.uk/BayesTraits.html
