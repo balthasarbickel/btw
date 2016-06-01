@@ -1,5 +1,5 @@
 
-Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, cv=FALSE, silent=TRUE, rm=T) {
+Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, cv=FALSE, silent=TRUE, rm=T, reuse.tree=T) {
 
 # CHECK FOR PROBLEMS IN THE DATA
 # tree$node.label <- NULL # throws an error when fed a multiPhylo object
@@ -44,7 +44,9 @@ input = c(input, paste("lf ./BTout.log.txt"))
 input = c(input, 'Schedule')
 input = c(input, "run")
 write(input, file="./inputfile.txt") 
+if(!reuse.tree | !file.exists("./BT.current.tree.nex")) {
 ape::write.nexus(tree, file="./BT.current.tree.nex", translate=T)	
+}
 write.table(data, file="./BT.current.data.txt", quote=F, col.names=F, row.names=F)
 	
 # RUN ANALYSIS
@@ -71,7 +73,7 @@ if (mean(Schedule$X..Accepted<.2)>.5 & mean(Schedule$X..Accepted>.4)>.5) {
 if(rm) {
 system(paste("rm ./BTout.log.txt"))
 system(paste("rm ./inputfile.txt"))
-system(paste("rm", "./BT.current.tree.nex"))
+if(!reuse.tree) {system(paste("rm", "./BT.current.tree.nex"))}
 system(paste("rm", "./BT.current.data.txt"))
 if (mode == 2) {
 	system(paste("rm", "./BTout.log.txt.Schedule.txt"))
