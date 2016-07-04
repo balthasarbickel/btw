@@ -1,7 +1,8 @@
 Continuous = function (tree, data, mode = "ML", regression = FALSE, directional = FALSE, lambda = 1, kappa = 1, delta = 1, ou = 0, force.correlation.to.0 = FALSE, mlt = 10, it = 100000, bi = 5000, sa = 100, silent=TRUE, rm=TRUE) {
 
 # CHECK FOR PROBLEMS IN THE DATA 
-# tree$node.label <- NULL # throws an error when fed a multiPhylo object
+if (class(tree) == 'phylo') {tree$node.label <- NULL}
+	
 if (class(tree) == "phylo") {treelabs = tree$tip.label} else if (class(tree) == "multiPhylo") {treelabs = attributes(tree)$TipLabel} else {
 	stop("Tree must be of class phylo or multiPhylo")
 }

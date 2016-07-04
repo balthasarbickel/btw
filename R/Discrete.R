@@ -2,7 +2,9 @@
 Discrete = function(tree, data, mode = "ML", dependent = FALSE, res = NULL, resall = NULL, mrca = NULL, fo = NULL, mlt = 10, it = 100000, bi = 5000, sa = 100, pr = NULL, pa = NULL, hp = NULL, hpall = NULL, rj = NULL, rjhp = NULL, cv=FALSE, silent=TRUE, rm=T, reuse.tree=T) {
 
 # CHECK FOR PROBLEMS IN THE DATA
-# tree$node.label <- NULL # throws an error when fed a multiPhylo object
+
+if (class(tree) == 'phylo') {tree$node.label <- NULL}
+
 if (class(tree) == "phylo") {treelabs = tree$tip.label} else if (class(tree) == "multiPhylo") {treelabs = attributes(tree)$TipLabel} else {
 	stop("Tree must be of class phylo or multiPhylo")
 }
