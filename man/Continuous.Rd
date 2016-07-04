@@ -3,7 +3,7 @@
 \title{Run BayesTraits Continuous}
 \usage{
 Continuous(tree, data, mode = "ML", regression = FALSE, directional = FALSE, lambda = 1, kappa = 1, delta = 1, 
-ou = 0, tc = FALSE, mlt = 10, it = 100000, bi = 5000, sa = 100, silent=TRUE)
+ou = 0, force.correlation.to.0 = FALSE, mlt = 10, it = 100000, bi = 5000, sa = 100, silent=TRUE, rm=TRUE)
 }
 \description{
 	Runs BayesTraits Continuous models.
@@ -18,12 +18,13 @@ ou = 0, tc = FALSE, mlt = 10, it = 100000, bi = 5000, sa = 100, silent=TRUE)
   \item{kappa}{value from 0 to 3 for the kappa parameter, or "ML" to estimate the maximum likelihood value kappa. Defaults to 1.}
   \item{delta}{value from 0 to 3 for the delta parameter, or "ML" to estimate the maximum likelihood value delta. Defaults to 1.}
   \item{ou}{value of the Ornstein-Uhlenbeck "rubber band" parameter, reflecting the strength of stabilizing selection, or "ML" to estimate the maximum likelihood value of the parameter. Defaults to 0.}
-  \item{tc}{logical indicated whether to force the correlation between traits to be 0 for the purpose of model testing. Ignored if the number of traits is less than or greater than 2. Defaults to FALSE.}
+  \item{force.correlation.to.0}{logical indicated whether to force the correlation between traits to be 0 for the purpose of model testing. Ignored if the number of traits is less than or greater than 2. Defaults to FALSE.}
   \item{mlt}{integer specifying the number of runs of the optimization algorithm in ML mode. Ignored if Bayesian mode is selected. Defaults to 10.}
   \item{it}{integer specifying the number of MCMC iterations in Bayesian mode. Default is 100000.}
   \item{bi}{integer specifying the number of iterations to discard as burn-in in Bayesian mode. Default is 5000.}
   \item{sa}{integer specifying the number of iterations to skip between samples in Bayesian mode. Default is 100.}
   \item{silent}{logical indicating whether to print BayesTraits output. Defaults to FALSE} 
+    \item{rm}{logical indicating whether to clean up and remove all temporary files. Defaults to TRUE} 
 }
 \details{
 	Runs BayesTraits continous models for one or more continuous traits. See BayesTraits documentation for more information: http://www.evolution.rdg.ac.uk/BayesTraits.html
