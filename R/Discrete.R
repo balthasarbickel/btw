@@ -75,7 +75,7 @@ if (mean(Schedule$X..Accepted<.2)>.5 & mean(Schedule$X..Accepted>.4)>.5) {
 if(rm) {
 system(paste("rm ./BTout.log.txt"))
 system(paste("rm ./inputfile.txt"))
-if(!reuse.tree) {system(paste("rm", "./BT.current.tree.nex"))}
+if(!reuse.tree) {system(paste("rm ./BT.current.tree.nex"))}
 system(paste("rm", "./BT.current.data.txt"))
 if (mode == 2) {
 	system(paste("rm", "./BTout.log.txt.Schedule.txt"))
